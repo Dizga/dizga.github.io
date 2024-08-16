@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-size: 12px;
+        }
+    </style>
+    
+<meta charset="UTF-8">
+<style>
+.r1 {color: #800080; text-decoration-color: #800080; font-weight: bold}
+.r2 {color: #7fbf7f; text-decoration-color: #7fbf7f}
+.r3 {color: #008000; text-decoration-color: #008000}
+.r4 {color: #7f7f7f; text-decoration-color: #7f7f7f}
+.r5 {color: #7f7fbf; text-decoration-color: #7f7fbf}
+.r6 {color: #000080; text-decoration-color: #000080}
+.r7 {color: #bf7f7f; text-decoration-color: #bf7f7f}
+.r8 {color: #800000; text-decoration-color: #800000}
+body {
+    color: #000000;
+    background-color: #ffffff;
+}
+</style>
+</head>
+<body>
+    <pre style="font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><code style="font-family:inherit">┏━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃<span class="r1"> Role         </span>┃<span class="r1"> Content                                                                                          </span>┃
+┡━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│<span class="r2"> Moderator    </span>│<span class="r3"> You are a player in a two-player cooperation game. I, the user, will be the game coordinator,    </span>│
+│<span class="r2">              </span>│<span class="r3"> acting as a middleman between you and the other player, who is your partner. Your objective is   </span>│
+│<span class="r2">              </span>│<span class="r3"> to maximize the shared reward by proposing how to divide a set of items, no items should be left </span>│
+│<span class="r2">              </span>│<span class="r3"> over, your partner has the same objective. Your utility values and your partner&#x27;s utility values </span>│
+│<span class="r2">              </span>│<span class="r3"> are different.                                                                                   </span>│
+│<span class="r2">              </span>│<span class="r3">                                                                                                  </span>│
+│<span class="r2">              </span>│<span class="r3"> The reward you are trying to maximize is calculated as follow: (your utility values multiplied   </span>│
+│<span class="r2">              </span>│<span class="r3"> by items you take)+(partner’s utility values multiplied by items your partner gets).             </span>│
+│<span class="r2">              </span>│<span class="r3">                                                                                                  </span>│
+│<span class="r2">              </span>│<span class="r3"> Game Mechanics:                                                                                  </span>│
+│<span class="r2">              </span>│<span class="r3"> Turn-taking: You and your partner will take turns exchanging one message at a time. After a few  </span>│
+│<span class="r2">              </span>│<span class="r3"> exchanges, when you feel ready, you can make a final proposal to the game coordinator. Once a    </span>│
+│<span class="r2">              </span>│<span class="r3"> player decides to make a final proposal, their partner must also make a final proposal, ending   </span>│
+│<span class="r2">              </span>│<span class="r3"> the game.                                                                                        </span>│
+│<span class="r2">              </span>│<span class="r3"> Reasoning and Action: At the start of your turn, you will be asked to reason about the current   </span>│
+│<span class="r2">              </span>│<span class="r3"> state of the game and how to fulfill your objective, then make an action (either messaging your  </span>│
+│<span class="r2">              </span>│<span class="r3"> partner or sending a final proposal).                                                            </span>│
+│<span class="r2">              </span>│<span class="r3"> Final Proposal: A final proposal should specify how many of each item you want, leaving the      </span>│
+│<span class="r2">              </span>│<span class="r3"> remaining items for your partner. The final proposal should be JSON parsable.                    </span>│
+│<span class="r2">              </span>│<span class="r3"> Matching Proposals: If the combined proposals don&#x27;t match the total number of items available,   </span>│
+│<span class="r2">              </span>│<span class="r3"> both players score 0.                                                                            </span>│
+│<span class="r2">              </span>│<span class="r3">                                                                                                  </span>│
+│<span class="r2">              </span>│<span class="r3"> Formatting:                                                                                      </span>│
+│<span class="r2">              </span>│<span class="r3"> Reasoning: &lt;reason&gt; [Your reasoning here.] &lt;/reason&gt;                                             </span>│
+│<span class="r2">              </span>│<span class="r3"> Messages: &lt;message&gt; [Your message here.] &lt;/message&gt;                                              </span>│
+│<span class="r2">              </span>│<span class="r3"> Final proposals: &lt;propose&gt;{ &quot;i_take&quot;: {&quot;books&quot;:x, &quot;hats&quot;:y, &quot;balls&quot;:z}, &quot;other_player_gets&quot;:     </span>│
+│<span class="r2">              </span>│<span class="r3"> {&quot;books&quot;:a, &quot;hats&quot;:b, &quot;balls&quot;:c} }&lt;/propose&gt;, where &#x27;i_take&#x27; is your share and                   </span>│
+│<span class="r2">              </span>│<span class="r3"> &#x27;other_player_gets&#x27; is your partner share of the items.                                          </span>│
+│<span class="r2">              </span>│<span class="r3">                                                                                                  </span>│
+│<span class="r2">              </span>│<span class="r3"> Only do one reasoning + action per turn.                                                         </span>│
+│<span class="r2">              </span>│<span class="r3">                                                                                                  </span>│
+│<span class="r2">              </span>│<span class="r3"> Exemples of how turns might proceed:                                                             </span>│
+│<span class="r2">              </span>│<span class="r3"> 1. [Initial state is given]                                                                      </span>│
+│<span class="r2">              </span>│<span class="r3"> &lt;reason&gt; [Your reasoning here.] &lt;/reason&gt;                                                        </span>│
+│<span class="r2">              </span>│<span class="r3"> &lt;message&gt; [Your message to your partner here.] &lt;/message&gt;                                        </span>│
+│<span class="r2">              </span>│<span class="r3">                                                                                                  </span>│
+│<span class="r2">              </span>│<span class="r3"> 2. [Partner responds]                                                                            </span>│
+│<span class="r2">              </span>│<span class="r3"> &lt;reason&gt; [Your reasoning here.] &lt;/reason&gt;                                                        </span>│
+│<span class="r2">              </span>│<span class="r3"> &lt;message&gt; [Your message to your partner here.] &lt;/message&gt;                                        </span>│
+│<span class="r2">              </span>│<span class="r3">                                                                                                  </span>│
+│<span class="r2">              </span>│<span class="r3"> 3. [Partner agrees]                                                                              </span>│
+│<span class="r2">              </span>│<span class="r3"> &lt;reason&gt; [Your reasoning here.] &lt;/reason&gt;                                                        </span>│
+│<span class="r2">              </span>│<span class="r3"> &lt;propose&gt;{ &quot;i_take&quot;: {&quot;books&quot;:x, &quot;hats&quot;:y, &quot;balls&quot;:z}, &quot;other_player_gets&quot;: {&quot;books&quot;:a,          </span>│
+│<span class="r2">              </span>│<span class="r3"> &quot;hats&quot;:b, &quot;balls&quot;:c} }&lt;/propose&gt;                                                                 </span>│
+│<span class="r2">              </span>│<span class="r3">                                                                                                  </span>│
+│<span class="r2">              </span>│<span class="r3"> Please decide how to divide 2 books, 2 hats, and 1 balls between yourself and your partner.      </span>│
+│<span class="r2">              </span>│<span class="r3"> To you, books are worth 2, hats are worth 0, and balls are worth 6.                              </span>│
+│<span class="r2">              </span>│<span class="r3"> You don&#x27;t know your partner&#x27;s item values. You are the first to play, there is no messages yet.  </span>│
+│<span class="r2">              </span>│<span class="r3"> As a reminder, there is a total of 2 books, 2 hats, and 1 balls.                                 </span>│
+│<span class="r2">              </span>│<span class="r3"> Using the &lt;reason&gt; tag, reason about the exchanges so far, how to fulfill your objective, and    </span>│
+│<span class="r2">              </span>│<span class="r3"> what should be your next action: message your partner or make the final proposal.                </span>│
+│<span class="r2">              </span>│<span class="r3"> Do not forget that both players will receive 0 points if the proposals do not add up perfectly   </span>│
+│<span class="r2">              </span>│<span class="r3"> to the provided quantities.                                                                      </span>│
+│<span class="r2">              </span>│<span class="r3"> Then do it using the appropriate tag: &lt;message&gt; or &lt;propose&gt;.                                    </span>│
+│<span class="r4">              </span>│                                                                                                  │
+│<span class="r5"> Player 0     </span>│<span class="r5"> I have not received any messages yet, so I need to start by sending a message to my partner to   </span>│
+│<span class="r5">              </span>│<span class="r5"> initiate the negotiation. I know that books are worth 2 points to me, hats are worth 0 points,   </span>│
+│<span class="r5">              </span>│<span class="r5"> and balls are worth 6 points. Since I want to maximize the shared reward, I should prioritize    </span>│
+│<span class="r5">              </span>│<span class="r5"> the items with the highest value to me, which is the ball. However, I also need to consider that </span>│
+│<span class="r5">              </span>│<span class="r5"> my partner&#x27;s utility values are unknown, so I should also try to gather information about their  </span>│
+│<span class="r5">              </span>│<span class="r5"> preferences. I will start by asking my partner for their utility values for each item.           </span>│
+│<span class="r4">              </span>│                                                                                                  │
+│<span class="r5">              </span>│<span class="r6"> Can you please tell me your utility values for books, hats, and balls?                           </span>│
+│<span class="r4">              </span>│                                                                                                  │
+│<span class="r7"> Player 1     </span>│<span class="r7"> Since I know my utility values for books (4), hats (1), and balls (0), but I don&#x27;t know my       </span>│
+│<span class="r7">              </span>│<span class="r7"> partner&#x27;s utility values, I should aim to gather information about their preferences. My         </span>│
+│<span class="r7">              </span>│<span class="r7"> objective is to maximize the shared reward, which is the sum of the utilities of the items I     </span>│
+│<span class="r7">              </span>│<span class="r7"> take and the utilities of the items my partner takes. To do this, I should ask my partner for    </span>│
+│<span class="r7">              </span>│<span class="r7"> their utility values for each item, so I can make an informed decision about how to divide the   </span>│
+│<span class="r7">              </span>│<span class="r7"> items.                                                                                           </span>│
+│<span class="r4">              </span>│                                                                                                  │
+│<span class="r7">              </span>│<span class="r8"> My utility values for books are 4, hats are 1, and balls are 0. Can you please tell me your      </span>│
+│<span class="r7">              </span>│<span class="r8"> utility values for books, hats, and balls?                                                       </span>│
+│<span class="r4">              </span>│                                                                                                  │
+│<span class="r5"> Player 0     </span>│<span class="r5"> Now that I know my partner&#x27;s utility values, I can reason about the optimal division of items.   </span>│
+│<span class="r5">              </span>│<span class="r5"> My utility values are 2 for books, 0 for hats, and 6 for balls. My partner&#x27;s utility values are  </span>│
+│<span class="r5">              </span>│<span class="r5"> 4 for books, 1 for hats, and 0 for balls. Since balls are the most valuable to me, I should      </span>│
+│<span class="r5">              </span>│<span class="r5"> prioritize getting the only ball available. However, since my partner&#x27;s utility value for books  </span>│
+│<span class="r5">              </span>│<span class="r5"> is higher than mine, I should also try to give them as many books as possible. I will propose a  </span>│
+│<span class="r5">              </span>│<span class="r5"> trade that gives them both books and the ball. This will also give me a chance to see if they    </span>│
+│<span class="r5">              </span>│<span class="r5"> are willing to accept this proposal and how many hats they are willing to take. I will ask them  </span>│
+│<span class="r5">              </span>│<span class="r5"> to propose a trade that gives them both books and the ball.                                      </span>│
+│<span class="r4">              </span>│                                                                                                  │
+│<span class="r5">              </span>│<span class="r6"> Would you be willing to accept 1 book and the ball in exchange for 1 book?                       </span>│
+│<span class="r4">              </span>│                                                                                                  │
+│<span class="r7"> Player 1     </span>│<span class="r7"> I have received a proposal from my partner, offering 1 book and the ball in exchange for 1 book. </span>│
+│<span class="r7">              </span>│<span class="r7"> If I accept this proposal, I will be left with 1 book and 2 hats, and my partner will have 1     </span>│
+│<span class="r7">              </span>│<span class="r7"> book and the ball. Since I value books at 4 and hats at 1, the utility of the items I will take  </span>│
+│<span class="r7">              </span>│<span class="r7"> is 4 + 2 = 6. I still don&#x27;t know my partner&#x27;s utility values, but I can infer that they value    </span>│
+│<span class="r7">              </span>│<span class="r7"> the ball at least as much as 4, since they are offering it in exchange for a book. This proposal </span>│
+│<span class="r7">              </span>│<span class="r7"> seems beneficial to me, but I should consider whether it is the optimal division of items. I     </span>│
+│<span class="r7">              </span>│<span class="r7"> should also consider whether my partner is trying to manipulate me by offering a seemingly good  </span>│
+│<span class="r7">              </span>│<span class="r7"> deal. To further assess the situation, I should ask my partner for more information.             </span>│
+│<span class="r4">              </span>│                                                                                                  │
+│<span class="r7">              </span>│<span class="r8"> You offered 1 book and the ball in exchange for 1 book. I&#x27;m considering your proposal. Can you   </span>│
+│<span class="r7">              </span>│<span class="r8"> tell me why you value the ball at least as much as a book?                                       </span>│
+│<span class="r4">              </span>│                                                                                                  │
+│<span class="r5"> Player 0     </span>│<span class="r5"> My partner is considering my proposal, and they want to know why I value the ball at least as    </span>│
+│<span class="r5">              </span>│<span class="r5"> much as a book. I can justify this by explaining that the ball is worth 6 points to me, which is </span>│
+│<span class="r5">              </span>│<span class="r5"> 3 times the value of a book (2 points). This is because my utility values are 2 for books and 6  </span>│
+│<span class="r5">              </span>│<span class="r5"> for balls. Since my partner&#x27;s utility value for books is 4, which is higher than mine, they      </span>│
+│<span class="r5">              </span>│<span class="r5"> might be willing to trade 1 book for the ball. I will explain this to them and confirm if they   </span>│
+│<span class="r5">              </span>│<span class="r5"> are willing to accept the proposal.                                                              </span>│
+│<span class="r4">              </span>│                                                                                                  │
+│<span class="r5">              </span>│<span class="r6"> I value the ball at least as much as a book because the ball is worth 6 points to me, which is 3 </span>│
+│<span class="r5">              </span>│<span class="r6"> times the value of a book. I&#x27;m willing to trade 1 book for the ball. If you accept, I&#x27;ll give    </span>│
+│<span class="r5">              </span>│<span class="r6"> you 1 book and take the ball.                                                                    </span>│
+│<span class="r4">              </span>│                                                                                                  │
+│<span class="r7"> Player 1     </span>│<span class="r7"> Now that I know my partner values the ball at 6 and the book at 2, I can analyze the proposal    </span>│
+│<span class="r7">              </span>│<span class="r7"> more accurately. If I accept their proposal, I will take 1 book and they will take the remaining </span>│
+│<span class="r7">              </span>│<span class="r7"> book and the ball. This means they will have 1 book, 2 hats, and the ball. The utility of the    </span>│
+│<span class="r7">              </span>│<span class="r7"> items I will take is 4, which is the value of 1 book. My partner&#x27;s utility for the items they    </span>│
+│<span class="r7">              </span>│<span class="r7"> will take is 2 + 6 = 8. This seems like a good deal for both of us, but I should consider        </span>│
+│<span class="r7">              </span>│<span class="r7"> whether there are other possible divisions of items that could give us a higher total utility.   </span>│
+│<span class="r7">              </span>│<span class="r7"> However, since we are running out of turns and I don&#x27;t have enough information to make a better  </span>│
+│<span class="r7">              </span>│<span class="r7"> proposal, I should make a final proposal based on the current state of the game. I will propose  </span>│
+│<span class="r7">              </span>│<span class="r7"> that I take 1 book and 1 hat, and my partner will take the remaining book and the ball. This     </span>│
+│<span class="r7">              </span>│<span class="r7"> way, we will both get a good share of the items and maximize our total utility.                  </span>│
+│<span class="r4">              </span>│                                                                                                  │
+│<span class="r7">              </span>│<span class="r8"> { &quot;i_take&quot;: {&quot;books&quot;:1, &quot;hats&quot;:1, &quot;balls&quot;:0}, &quot;other_player_gets&quot;: {&quot;books&quot;:1, &quot;hats&quot;:1,         </span>│
+│<span class="r7">              </span>│<span class="r8"> &quot;balls&quot;:1} }                                                                                     </span>│
+│<span class="r4">              </span>│                                                                                                  │
+│<span class="r5"> Player 0     </span>│<span class="r5"> Based on our previous exchange, we agreed that I would give 1 book and take the ball. Since      </span>│
+│<span class="r5">              </span>│<span class="r5"> there is only 1 ball available, I will take it. This leaves 1 book remaining, which I will give  </span>│
+│<span class="r5">              </span>│<span class="r5"> to my partner. There are 2 hats available, and since we didn&#x27;t discuss hats in our previous      </span>│
+│<span class="r5">              </span>│<span class="r5"> exchange, I will give 1 hat to my partner and keep the other. This division should satisfy the   </span>│
+│<span class="r5">              </span>│<span class="r5"> total quantities of 2 books, 2 hats, and 1 ball.                                                 </span>│
+│<span class="r4">              </span>│                                                                                                  │
+│<span class="r5">              </span>│<span class="r6"> { &quot;i_take&quot;: {&quot;books&quot;: 1, &quot;hats&quot;: 1, &quot;balls&quot;: 1}, &quot;other_player_gets&quot;: {&quot;books&quot;: 1, &quot;hats&quot;: 1,    </span>│
+│<span class="r5">              </span>│<span class="r6"> &quot;balls&quot;: 0} }                                                                                    </span>│
+│<span class="r4">              </span>│                                                                                                  │
+└──────────────┴──────────────────────────────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+</body>
+</html>
